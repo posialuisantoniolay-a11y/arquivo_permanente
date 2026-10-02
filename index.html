@@ -111,7 +111,7 @@
         </button>
         <button class="acao acao-caixa" data-abrir="dlg-caixa">
           <span class="acao-icone"><svg><use href="#i-caixa"/></svg></span>
-          <span class="acao-texto"><strong>Adicionar Caixa</strong><small>Criar uma nova caixa</small></span>
+          <span class="acao-texto"><strong>Caixas</strong><small>Criar ou renomear caixas</small></span>
           <svg class="acao-seta"><use href="#i-seta"/></svg>
         </button>
       </nav>
@@ -256,12 +256,35 @@
           <input id="caixa-nome" type="text" required autocomplete="off" maxlength="30" placeholder="Ex.: A21">
         </div>
         <p id="caixa-aviso" class="aviso" hidden></p>
-        <p class="info">Caixas existentes:</p>
+        <p class="info">Caixas existentes — clique em uma caixa para renomear:</p>
         <div id="caixa-existentes" class="lista-caixas"></div>
       </div>
       <footer class="dialogo-rodape">
         <button type="button" class="btn" data-fechar>Cancelar</button>
         <button type="submit" class="btn btn-primario">Adicionar Caixa</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Renomear caixa -->
+  <dialog id="dlg-renomear-caixa" class="dialogo dialogo-estreito tema-caixa">
+    <form id="form-renomear-caixa" method="dialog">
+      <header class="dialogo-topo">
+        <span class="dialogo-icone"><svg><use href="#i-editar"/></svg></span>
+        <h2>Renomear caixa <span id="ren-atual" class="etiqueta-caixa"></span></h2>
+        <button type="button" class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+      </header>
+      <div class="dialogo-corpo">
+        <div class="campo">
+          <label for="ren-nova">Novo nome da caixa</label>
+          <input id="ren-nova" type="text" required autocomplete="off" maxlength="30">
+        </div>
+        <p id="ren-aviso" class="aviso" hidden></p>
+        <p id="ren-info" class="info"></p>
+      </div>
+      <footer class="dialogo-rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="submit" class="btn btn-primario">Renomear</button>
       </footer>
     </form>
   </dialog>

@@ -394,6 +394,8 @@ input:focus, select:focus { outline: none; border-color: var(--primaria); box-sh
   font-weight: 600;
   color: #475569;
 }
+button.chip { cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+button.chip:hover { background: #fae8ff; border-color: var(--rosa); color: #a21caf; }
 
 /* ---------- Diálogos ---------- */
 .dialogo {

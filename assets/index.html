@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquivo Permanente · E.E.B. Frei Lucínio Korte</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-busca" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
+    <symbol id="i-adicionar" viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+    <symbol id="i-remover" viewBox="0 0 24 24"><path d="M14 8c0-2.21-1.79-4-4-4S6 5.79 6 8s1.79 4 4 4 4-1.79 4-4zm3 2v2h6v-2h-6zM2 18v2h16v-2c0-2.66-5.33-4-8-4s-8 1.34-8 4z"/></symbol>
+    <symbol id="i-editar" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></symbol>
+    <symbol id="i-caixa" viewBox="0 0 24 24"><path d="M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2zm-5 12H9v-2h6v2zm5-7H4V4h16v3z"/></symbol>
+    <symbol id="i-pessoas" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></symbol>
+    <symbol id="i-seta" viewBox="0 0 24 24"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></symbol>
+    <symbol id="i-atualizar" viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></symbol>
+    <symbol id="i-backup" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></symbol>
+    <symbol id="i-sair" viewBox="0 0 24 24"><path d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></symbol>
+    <symbol id="i-fechar" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+    <symbol id="i-alerta" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></symbol>
+  </svg>
+
+  <!-- Tela de acesso -->
+  <section id="tela-login" class="tela-login" hidden>
+    <form id="form-login" class="cartao-login">
+      <img src="assets/logo-redonda.png" alt="Logo da escola" class="login-logo">
+      <h1>Arquivo Permanente</h1>
+      <p class="subtitulo">E.E.B. Frei Lucínio Korte</p>
+      <div class="campo">
+        <label for="login-senha">Senha de acesso</label>
+        <input id="login-senha" type="password" autocomplete="current-password" required>
+      </div>
+      <label class="check">
+        <input id="login-lembrar" type="checkbox"> Lembrar neste computador
+      </label>
+      <button type="submit" class="btn btn-primario btn-largo">Entrar</button>
+      <p id="login-erro" class="erro" role="alert"></p>
+    </form>
+  </section>
+
+  <!-- Aplicativo -->
+  <div id="app" class="app" hidden>
+    <header class="topo">
+      <div class="topo-marca">
+        <img src="assets/logo-redonda.png" alt="" class="topo-logo">
+        <div>
+          <strong>Arquivo Permanente</strong>
+          <span>E.E.B. Frei Lucínio Korte</span>
+        </div>
+      </div>
+      <div class="topo-acoes">
+        <span id="status-conexao" class="status"></span>
+        <button id="btn-atualizar" class="btn-topo" title="Buscar os dados mais recentes da planilha">
+          <svg><use href="#i-atualizar"/></svg><span>Atualizar</span>
+        </button>
+        <button id="btn-backup" class="btn-topo btn-topo-destaque" title="Baixar uma cópia de segurança de todos os dados">
+          <svg><use href="#i-backup"/></svg><span>Backup</span>
+        </button>
+        <button id="btn-sair" class="btn-topo btn-topo-sair" title="Sair do sistema">
+          <svg><use href="#i-sair"/></svg><span>Sair</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="conteudo">
+      <section class="hero">
+        <div class="hero-texto">
+          <span class="hero-selo">Controle de documentos</span>
+          <h1>Arquivo Permanente</h1>
+          <p>Encontre em qual caixa está o registro de alunos, professores e funcionários.</p>
+          <form id="form-busca-rapida" class="busca-rapida" role="search">
+            <svg><use href="#i-busca"/></svg>
+            <input id="busca-rapida" type="search" placeholder="Buscar pelo nome..." autocomplete="off" aria-label="Buscar pelo nome">
+            <button type="submit" class="btn btn-claro">Buscar</button>
+          </form>
+        </div>
+        <img src="assets/logo-branca.png" alt="E.E. Básica Frei Lucínio Korte" class="hero-logo">
+      </section>
+
+      <section id="estatisticas" class="estatisticas" aria-label="Resumo do arquivo"></section>
+
+      <h2 class="secao-titulo">O que você deseja fazer?</h2>
+      <nav class="acoes">
+        <button class="acao acao-pesquisar" data-abrir="dlg-pesquisar">
+          <span class="acao-icone"><svg><use href="#i-busca"/></svg></span>
+          <span class="acao-texto"><strong>Pesquisar</strong><small>Por nome ou por caixa</small></span>
+          <svg class="acao-seta"><use href="#i-seta"/></svg>
+        </button>
+        <button class="acao acao-adicionar" data-abrir="dlg-adicionar">
+          <span class="acao-icone"><svg><use href="#i-adicionar"/></svg></span>
+          <span class="acao-texto"><strong>Adicionar ao Arquivo</strong><small>Cadastrar uma pessoa</small></span>
+          <svg class="acao-seta"><use href="#i-seta"/></svg>
+        </button>
+        <button class="acao acao-editar" data-abrir="dlg-pesquisar">
+          <span class="acao-icone"><svg><use href="#i-editar"/></svg></span>
+          <span class="acao-texto"><strong>Editar Registro</strong><small>Corrigir nome, caixa ou tipo</small></span>
+          <svg class="acao-seta"><use href="#i-seta"/></svg>
+        </button>
+        <button class="acao acao-excluir" data-abrir="dlg-excluir">
+          <span class="acao-icone"><svg><use href="#i-remover"/></svg></span>
+          <span class="acao-texto"><strong>Excluir do Arquivo</strong><small>Remover um registro</small></span>
+          <svg class="acao-seta"><use href="#i-seta"/></svg>
+        </button>
+        <button class="acao acao-caixa" data-abrir="dlg-caixa">
+          <span class="acao-icone"><svg><use href="#i-caixa"/></svg></span>
+          <span class="acao-texto"><strong>Adicionar Caixa</strong><small>Criar uma nova caixa</small></span>
+          <svg class="acao-seta"><use href="#i-seta"/></svg>
+        </button>
+      </nav>
+
+      <p id="ultima-atualizacao" class="ultima-atualizacao"></p>
+    </main>
+  </div>
+
+  <!-- Pesquisar -->
+  <dialog id="dlg-pesquisar" class="dialogo dialogo-largo tema-pesquisar">
+    <header class="dialogo-topo">
+      <span class="dialogo-icone"><svg><use href="#i-busca"/></svg></span>
+      <h2>Buscar no arquivo</h2>
+      <button class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+    </header>
+    <div class="dialogo-corpo">
+      <div class="abas" role="tablist">
+        <button type="button" class="aba ativa" data-modo="nome" role="tab">Por nome</button>
+        <button type="button" class="aba" data-modo="caixa" role="tab">Por caixa</button>
+      </div>
+      <div class="campo" id="pesq-campo-nome">
+        <label for="pesq-nome">Nome</label>
+        <input id="pesq-nome" type="search" placeholder="Digite parte do nome..." autocomplete="off">
+      </div>
+      <div class="campo" id="pesq-campo-caixa" hidden>
+        <label for="pesq-caixa">Caixa</label>
+        <select id="pesq-caixa"></select>
+      </div>
+      <p id="pesq-info" class="info"></p>
+      <div class="tabela-rolagem">
+        <table class="tabela">
+          <thead><tr><th>Nome</th><th>Caixa</th><th>Tipo</th><th></th></tr></thead>
+          <tbody id="pesq-resultados"></tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="dialogo-rodape">
+      <button type="button" class="btn" data-fechar>Fechar</button>
+    </footer>
+  </dialog>
+
+  <!-- Adicionar ao arquivo -->
+  <dialog id="dlg-adicionar" class="dialogo tema-adicionar">
+    <form id="form-adicionar" method="dialog">
+      <header class="dialogo-topo">
+        <span class="dialogo-icone"><svg><use href="#i-adicionar"/></svg></span>
+        <h2>Adicionar ao arquivo</h2>
+        <button type="button" class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+      </header>
+      <div class="dialogo-corpo">
+        <div class="campo">
+          <label for="add-nome">Nome completo</label>
+          <input id="add-nome" type="text" required autocomplete="off" maxlength="150">
+        </div>
+        <p id="add-aviso" class="aviso" hidden></p>
+        <div class="linha-campos">
+          <div class="campo">
+            <label for="add-caixa">Caixa</label>
+            <select id="add-caixa" required></select>
+          </div>
+          <div class="campo">
+            <label for="add-tipo">Tipo</label>
+            <select id="add-tipo" required></select>
+          </div>
+        </div>
+      </div>
+      <footer class="dialogo-rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="submit" class="btn btn-primario">Adicionar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Editar registro -->
+  <dialog id="dlg-editar" class="dialogo tema-editar">
+    <form id="form-editar" method="dialog">
+      <header class="dialogo-topo">
+        <span class="dialogo-icone"><svg><use href="#i-editar"/></svg></span>
+        <h2>Editar registro</h2>
+        <button type="button" class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+      </header>
+      <div class="dialogo-corpo">
+        <div class="campo">
+          <label for="edt-nome">Nome completo</label>
+          <input id="edt-nome" type="text" required autocomplete="off" maxlength="150">
+        </div>
+        <p id="edt-aviso" class="aviso" hidden></p>
+        <div class="linha-campos">
+          <div class="campo">
+            <label for="edt-caixa">Caixa</label>
+            <select id="edt-caixa" required></select>
+          </div>
+          <div class="campo">
+            <label for="edt-tipo">Tipo</label>
+            <select id="edt-tipo" required></select>
+          </div>
+        </div>
+      </div>
+      <footer class="dialogo-rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar alterações</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Excluir do arquivo -->
+  <dialog id="dlg-excluir" class="dialogo dialogo-largo tema-excluir">
+    <header class="dialogo-topo">
+      <span class="dialogo-icone"><svg><use href="#i-remover"/></svg></span>
+      <h2>Excluir do arquivo</h2>
+      <button class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+    </header>
+    <div class="dialogo-corpo">
+      <div class="campo">
+        <label for="exc-nome">Nome</label>
+        <input id="exc-nome" type="search" placeholder="Digite parte do nome..." autocomplete="off">
+      </div>
+      <p id="exc-info" class="info"></p>
+      <div class="tabela-rolagem">
+        <table class="tabela">
+          <thead><tr><th>Nome</th><th>Caixa</th><th>Tipo</th><th></th></tr></thead>
+          <tbody id="exc-resultados"></tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="dialogo-rodape">
+      <button type="button" class="btn" data-fechar>Fechar</button>
+    </footer>
+  </dialog>
+
+  <!-- Adicionar caixa -->
+  <dialog id="dlg-caixa" class="dialogo tema-caixa">
+    <form id="form-caixa" method="dialog">
+      <header class="dialogo-topo">
+        <span class="dialogo-icone"><svg><use href="#i-caixa"/></svg></span>
+        <h2>Adicionar nova caixa</h2>
+        <button type="button" class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+      </header>
+      <div class="dialogo-corpo">
+        <div class="campo">
+          <label for="caixa-nome">Nome da caixa</label>
+          <input id="caixa-nome" type="text" required autocomplete="off" maxlength="30" placeholder="Ex.: A21">
+        </div>
+        <p id="caixa-aviso" class="aviso" hidden></p>
+        <p class="info">Caixas existentes:</p>
+        <div id="caixa-existentes" class="lista-caixas"></div>
+      </div>
+      <footer class="dialogo-rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="submit" class="btn btn-primario">Adicionar Caixa</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Confirmação -->
+  <dialog id="dlg-confirmar" class="dialogo dialogo-estreito tema-excluir">
+    <header class="dialogo-topo">
+      <span class="dialogo-icone"><svg><use href="#i-alerta"/></svg></span>
+      <h2 id="confirmar-titulo">Confirmar</h2>
+    </header>
+    <div class="dialogo-corpo">
+      <p id="confirmar-texto"></p>
+    </div>
+    <footer class="dialogo-rodape">
+      <button type="button" class="btn" id="confirmar-nao">Cancelar</button>
+      <button type="button" class="btn btn-perigo" id="confirmar-sim">Confirmar</button>
+    </footer>
+  </dialog>
+
+  <div id="carregando" class="carregando" hidden>
+    <div class="spinner"></div>
+    <p id="carregando-texto">Carregando...</p>
+  </div>
+
+  <div id="avisos" class="avisos" aria-live="polite"></div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" defer></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

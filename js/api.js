@@ -115,6 +115,23 @@ const Api = (() => {
         gravarDemo(base);
         return { caixa };
       }
+      case 'renomearCaixa': {
+        const antiga = normalizar(dados.antiga).toUpperCase();
+        const nova = normalizar(dados.nova).toUpperCase();
+        if (!nova) throw new Error('Informe o novo nome da caixa.');
+        if (!base.caixas.includes(antiga)) throw new Error(`A caixa ${antiga} não foi encontrada.`);
+        if (nova !== antiga && base.caixas.includes(nova)) throw new Error(`A caixa ${nova} já existe.`);
+        base.caixas = base.caixas.map((c) => (c === antiga ? nova : c));
+        let pessoas = 0;
+        base.pessoas.forEach((p) => {
+          if (p.caixa === antiga) {
+            p.caixa = nova;
+            pessoas++;
+          }
+        });
+        gravarDemo(base);
+        return { antiga, nova, pessoas };
+      }
       default:
         throw new Error('Ação desconhecida: ' + acao);
     }
@@ -133,5 +150,6 @@ const Api = (() => {
     editarPessoa: (dados) => chamar('editarPessoa', dados),
     excluirPessoa: (dados) => chamar('excluirPessoa', dados),
     adicionarCaixa: (caixa) => chamar('adicionarCaixa', { caixa }),
+    renomearCaixa: (antiga, nova) => chamar('renomearCaixa', { antiga, nova }),
   };
 })();

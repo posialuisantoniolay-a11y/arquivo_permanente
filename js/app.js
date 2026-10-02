@@ -489,7 +489,7 @@
     $('form-caixa').reset();
     $('caixa-aviso').hidden = true;
     $('caixa-existentes').innerHTML = estado.caixas
-      .map((c) => `<span class="chip">${escapar(c)}</span>`)
+      .map((c) => `<button type="button" class="chip" data-renomear="${escapar(c)}" title="Renomear caixa ${escapar(c)}">${escapar(c)}</button>`)
       .join('');
   }
 
@@ -514,6 +514,57 @@
     renderizarResumo();
     $('dlg-caixa').close();
     avisar(`Caixa ${resultado.caixa} adicionada com sucesso.`);
+  });
+
+  // ---------- Renomear caixa ----------
+  let caixaEmEdicao = '';
+
+  $('caixa-existentes').addEventListener('click', (e) => {
+    const chip = e.target.closest('[data-renomear]');
+    if (!chip) return;
+    caixaEmEdicao = chip.dataset.renomear;
+    const total = contarPorCaixa()[caixaEmEdicao] || 0;
+    $('form-renomear-caixa').reset();
+    $('ren-atual').textContent = caixaEmEdicao;
+    $('ren-nova').value = caixaEmEdicao;
+    $('ren-aviso').hidden = true;
+    $('ren-info').textContent = total
+      ? `As ${total} pessoa(s) desta caixa passarão para o novo nome.`
+      : 'Esta caixa está vazia.';
+    $('dlg-renomear-caixa').showModal();
+    $('ren-nova').select();
+  });
+
+  $('ren-nova').addEventListener('input', () => {
+    const valor = $('ren-nova').value.trim().toUpperCase();
+    const existe = valor && valor !== caixaEmEdicao && estado.caixas.includes(valor);
+    $('ren-aviso').hidden = !existe;
+    $('ren-aviso').textContent = existe ? `A caixa ${valor} já existe.` : '';
+  });
+
+  $('form-renomear-caixa').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const antiga = caixaEmEdicao;
+    const nova = $('ren-nova').value.replace(/\s+/g, ' ').trim().toUpperCase();
+    if (!nova) return $('ren-nova').focus();
+    if (nova === antiga) {
+      $('dlg-renomear-caixa').close();
+      return;
+    }
+    if (estado.caixas.includes(nova)) {
+      avisar(`A caixa ${nova} já existe.`, true);
+      return;
+    }
+
+    const resultado = await executar(e.submitter, () => Api.renomearCaixa(antiga, nova));
+    if (!resultado) return;
+    estado.caixas = estado.caixas.map((c) => (c === antiga ? resultado.nova : c)).sort(ordenarNatural);
+    estado.pessoas = estado.pessoas.map((p) => (p.caixa === antiga ? { ...p, caixa: resultado.nova } : p));
+    if (estado.ultimaCaixa === antiga) estado.ultimaCaixa = resultado.nova;
+    renderizarResumo();
+    prepararCaixa();
+    $('dlg-renomear-caixa').close();
+    avisar(`Caixa ${antiga} renomeada para ${resultado.nova} (${resultado.pessoas} pessoa(s) atualizada(s)).`);
   });
 
   // ---------- Backup ----------

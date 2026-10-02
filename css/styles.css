@@ -11,6 +11,7 @@
   --azul: #0ea5e9;
   --vermelho: #ef4444;
   --rosa: #d946ef;
+  --ambar: #f59e0b;
   --raio: 16px;
   --raio-sm: 10px;
   --sombra-sm: 0 1px 2px rgba(15, 23, 42, .06), 0 1px 3px rgba(15, 23, 42, .08);
@@ -314,6 +315,7 @@ svg { width: 1em; height: 1em; fill: currentColor; flex-shrink: 0; }
 
 .acao-pesquisar { --cor: var(--verde); --cor-fundo: #d1fae5; }
 .acao-adicionar { --cor: var(--azul); --cor-fundo: #e0f2fe; }
+.acao-editar { --cor: var(--ambar); --cor-fundo: #fef3c7; }
 .acao-excluir { --cor: var(--vermelho); --cor-fundo: #fee2e2; }
 .acao-caixa { --cor: var(--rosa); --cor-fundo: #fae8ff; }
 
@@ -343,6 +345,8 @@ svg { width: 1em; height: 1em; fill: currentColor; flex-shrink: 0; }
 .btn-claro { background: var(--primaria); border-color: var(--primaria); color: #fff; border-radius: 10px; }
 .btn-claro:hover { background: var(--marinho-claro); }
 .btn-pequeno { padding: 6px 12px; font-size: .82rem; }
+.btn-editar { color: #b45309; border-color: #fde68a; background: #fffbeb; }
+.btn-editar:hover { background: #fef3c7; }
 .btn-largo { width: 100%; margin-top: 14px; padding: 12px; }
 
 /* ---------- Campos ---------- */
@@ -410,6 +414,7 @@ input:focus, select:focus { outline: none; border-color: var(--primaria); box-sh
 
 .tema-pesquisar { --cor: var(--verde); --cor-fundo: #d1fae5; }
 .tema-adicionar { --cor: var(--azul); --cor-fundo: #e0f2fe; }
+.tema-editar { --cor: var(--ambar); --cor-fundo: #fef3c7; }
 .tema-excluir { --cor: var(--vermelho); --cor-fundo: #fee2e2; }
 .tema-caixa { --cor: var(--rosa); --cor-fundo: #fae8ff; }
 

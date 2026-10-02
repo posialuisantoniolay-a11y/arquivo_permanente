@@ -17,6 +17,7 @@
     <symbol id="i-busca" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
     <symbol id="i-adicionar" viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
     <symbol id="i-remover" viewBox="0 0 24 24"><path d="M14 8c0-2.21-1.79-4-4-4S6 5.79 6 8s1.79 4 4 4 4-1.79 4-4zm3 2v2h6v-2h-6zM2 18v2h16v-2c0-2.66-5.33-4-8-4s-8 1.34-8 4z"/></symbol>
+    <symbol id="i-editar" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></symbol>
     <symbol id="i-caixa" viewBox="0 0 24 24"><path d="M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2zm-5 12H9v-2h6v2zm5-7H4V4h16v3z"/></symbol>
     <symbol id="i-pessoas" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></symbol>
     <symbol id="i-seta" viewBox="0 0 24 24"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></symbol>
@@ -98,6 +99,11 @@
           <span class="acao-texto"><strong>Adicionar ao Arquivo</strong><small>Cadastrar uma pessoa</small></span>
           <svg class="acao-seta"><use href="#i-seta"/></svg>
         </button>
+        <button class="acao acao-editar" data-abrir="dlg-pesquisar">
+          <span class="acao-icone"><svg><use href="#i-editar"/></svg></span>
+          <span class="acao-texto"><strong>Editar Registro</strong><small>Corrigir nome, caixa ou tipo</small></span>
+          <svg class="acao-seta"><use href="#i-seta"/></svg>
+        </button>
         <button class="acao acao-excluir" data-abrir="dlg-excluir">
           <span class="acao-icone"><svg><use href="#i-remover"/></svg></span>
           <span class="acao-texto"><strong>Excluir do Arquivo</strong><small>Remover um registro</small></span>
@@ -137,7 +143,7 @@
       <p id="pesq-info" class="info"></p>
       <div class="tabela-rolagem">
         <table class="tabela">
-          <thead><tr><th>Nome</th><th>Caixa</th><th>Tipo</th></tr></thead>
+          <thead><tr><th>Nome</th><th>Caixa</th><th>Tipo</th><th></th></tr></thead>
           <tbody id="pesq-resultados"></tbody>
         </table>
       </div>
@@ -175,6 +181,38 @@
       <footer class="dialogo-rodape">
         <button type="button" class="btn" data-fechar>Cancelar</button>
         <button type="submit" class="btn btn-primario">Adicionar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Editar registro -->
+  <dialog id="dlg-editar" class="dialogo tema-editar">
+    <form id="form-editar" method="dialog">
+      <header class="dialogo-topo">
+        <span class="dialogo-icone"><svg><use href="#i-editar"/></svg></span>
+        <h2>Editar registro</h2>
+        <button type="button" class="fechar" data-fechar aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+      </header>
+      <div class="dialogo-corpo">
+        <div class="campo">
+          <label for="edt-nome">Nome completo</label>
+          <input id="edt-nome" type="text" required autocomplete="off" maxlength="150">
+        </div>
+        <p id="edt-aviso" class="aviso" hidden></p>
+        <div class="linha-campos">
+          <div class="campo">
+            <label for="edt-caixa">Caixa</label>
+            <select id="edt-caixa" required></select>
+          </div>
+          <div class="campo">
+            <label for="edt-tipo">Tipo</label>
+            <select id="edt-tipo" required></select>
+          </div>
+        </div>
+      </div>
+      <footer class="dialogo-rodape">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="submit" class="btn btn-primario">Salvar alterações</button>
       </footer>
     </form>
   </dialog>

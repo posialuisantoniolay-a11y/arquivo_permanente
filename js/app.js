@@ -225,6 +225,9 @@
     return `<tr class="vazio"><td colspan="${colunas}">${escapar(texto)}</td></tr>`;
   }
 
+  const botaoEditar = (p) =>
+    `<td class="col-acao"><button type="button" class="btn btn-editar btn-pequeno" data-editar="${p.id}">Editar</button></td>`;
+
   // ---------- Diálogos: abrir/fechar ----------
   document.querySelectorAll('[data-abrir]').forEach((botao) =>
     botao.addEventListener('click', () => abrirDialogo(botao.dataset.abrir))
@@ -290,7 +293,7 @@
       const caixa = $('pesq-caixa').value;
       if (!caixa) {
         info.textContent = 'Escolha uma caixa para ver quem está nela.';
-        corpo.innerHTML = linhaVazia(3, 'Nenhuma caixa selecionada');
+        corpo.innerHTML = linhaVazia(4, 'Nenhuma caixa selecionada');
         return;
       }
       const lista = estado.pessoas
@@ -298,23 +301,23 @@
         .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
       info.textContent = `${lista.length} pessoa(s) na caixa ${caixa}.`;
       corpo.innerHTML = lista.length
-        ? lista.map((p) => linhaPessoa(p, [])).join('')
-        : linhaVazia(3, 'Caixa vazia');
+        ? lista.map((p) => linhaPessoa(p, [], botaoEditar(p))).join('')
+        : linhaVazia(4, 'Caixa vazia');
       return;
     }
 
     const { lista, resultados } = buscarPorNome($('pesq-nome').value);
     if (!lista.length) {
-      info.textContent = 'Digite o nome (ou parte dele). Não precisa usar acentos.';
-      corpo.innerHTML = linhaVazia(3, 'Digite para pesquisar');
+      info.textContent = 'Digite o nome (ou parte dele). Não precisa usar acentos. Para corrigir um registro, clique em "Editar".';
+      corpo.innerHTML = linhaVazia(4, 'Digite para pesquisar');
       return;
     }
     info.textContent = resultados.length > LIMITE_RESULTADOS
       ? `${resultados.length} encontrados. Mostrando os ${LIMITE_RESULTADOS} primeiros — refine a busca.`
       : `${resultados.length} encontrado(s).`;
     corpo.innerHTML = resultados.length
-      ? resultados.slice(0, LIMITE_RESULTADOS).map((p) => linhaPessoa(p, lista)).join('')
-      : linhaVazia(3, 'Nenhuma pessoa encontrada com esse nome');
+      ? resultados.slice(0, LIMITE_RESULTADOS).map((p) => linhaPessoa(p, lista, botaoEditar(p))).join('')
+      : linhaVazia(4, 'Nenhuma pessoa encontrada com esse nome');
   }
 
   $('pesq-nome').addEventListener('input', renderizarPesquisa);
@@ -331,9 +334,9 @@
     opcoes($('add-tipo'), estado.tipos, 'Selecione...', estado.ultimoTipo);
   }
 
-  function homonimos(nome) {
+  function homonimos(nome, ignorarId = null) {
     const chave = termos(nome).join(' ');
-    return chave ? estado.pessoas.filter((p) => p.chave === chave) : [];
+    return chave ? estado.pessoas.filter((p) => p.chave === chave && p.id !== ignorarId) : [];
   }
 
   $('add-nome').addEventListener('input', () => {
@@ -371,6 +374,63 @@
     renderizarResumo();
     $('dlg-adicionar').close();
     avisar(`${pessoa.nome} adicionado(a) na caixa ${pessoa.caixa}.`);
+  });
+
+  // ---------- Editar registro ----------
+  let emEdicao = null;
+
+  $('pesq-resultados').addEventListener('click', (e) => {
+    const botao = e.target.closest('[data-editar]');
+    if (!botao) return;
+    const pessoa = estado.pessoas.find((p) => p.id === Number(botao.dataset.editar));
+    if (pessoa) abrirEdicao(pessoa);
+  });
+
+  function abrirEdicao(pessoa) {
+    emEdicao = pessoa;
+    $('form-editar').reset();
+    $('edt-aviso').hidden = true;
+    $('edt-nome').value = pessoa.nome;
+    opcoes($('edt-caixa'), estado.caixas, 'Selecione...', pessoa.caixa);
+    opcoes($('edt-tipo'), estado.tipos, 'Selecione...', pessoa.tipo);
+    $('dlg-editar').showModal();
+    $('edt-nome').focus();
+  }
+
+  $('edt-nome').addEventListener('input', () => {
+    const iguais = homonimos($('edt-nome').value, emEdicao && emEdicao.id);
+    const aviso = $('edt-aviso');
+    aviso.hidden = !iguais.length;
+    aviso.innerHTML = iguais
+      .map((p) => `Já existe no arquivo: <strong>${escapar(p.nome)}</strong> — caixa ${escapar(p.caixa)} (${escapar(p.tipo || 'sem tipo')})`)
+      .join('<br>');
+  });
+
+  $('form-editar').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const pessoa = emEdicao;
+    if (!pessoa) return;
+    const dados = {
+      id: pessoa.id,
+      nomeAtual: pessoa.nome,
+      nome: $('edt-nome').value.replace(/\s+/g, ' ').trim(),
+      caixa: $('edt-caixa').value,
+      tipo: $('edt-tipo').value,
+    };
+    if (!dados.nome) return $('edt-nome').focus();
+    if (dados.nome === pessoa.nome && dados.caixa === pessoa.caixa && dados.tipo === pessoa.tipo) {
+      $('dlg-editar').close();
+      return;
+    }
+
+    const editada = await executar(e.submitter, () => Api.editarPessoa(dados));
+    if (!editada) return;
+    const atualizada = prepararPessoa(editada);
+    estado.pessoas = estado.pessoas.map((p) => (p.id === atualizada.id ? atualizada : p));
+    renderizarResumo();
+    if ($('dlg-pesquisar').open) renderizarPesquisa();
+    $('dlg-editar').close();
+    avisar(`Registro de ${atualizada.nome} atualizado (caixa ${atualizada.caixa}).`);
   });
 
   // ---------- Excluir do arquivo ----------

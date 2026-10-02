@@ -86,6 +86,20 @@ const Api = (() => {
         gravarDemo(base);
         return pessoa;
       }
+      case 'editarPessoa': {
+        const pessoa = base.pessoas.find((p) => p.id === Number(dados.id));
+        if (!pessoa) throw new Error('Pessoa não encontrada.');
+        const editada = {
+          id: pessoa.id,
+          nome: normalizar(dados.nome),
+          caixa: normalizar(dados.caixa).toUpperCase(),
+          tipo: normalizar(dados.tipo).toUpperCase(),
+        };
+        if (!editada.nome || !editada.caixa || !editada.tipo) throw new Error('Preencha todos os campos.');
+        Object.assign(pessoa, editada);
+        gravarDemo(base);
+        return editada;
+      }
       case 'excluirPessoa': {
         const antes = base.pessoas.length;
         base.pessoas = base.pessoas.filter((p) => p.id !== Number(dados.id));
@@ -116,6 +130,7 @@ const Api = (() => {
     entrar: () => chamar('entrar'),
     listar: () => chamar('listar'),
     adicionarPessoa: (dados) => chamar('adicionarPessoa', dados),
+    editarPessoa: (dados) => chamar('editarPessoa', dados),
     excluirPessoa: (dados) => chamar('excluirPessoa', dados),
     adicionarCaixa: (caixa) => chamar('adicionarCaixa', { caixa }),
   };
